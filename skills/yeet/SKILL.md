@@ -12,7 +12,7 @@ Steps:
 
 1. Add all unstaged changes with `git add -A`.
 2. Inspect the staged changes and write a concise commit message that accurately summarizes them.
-3. Commit the changes with that message.
+3. Commit the changes with that message. Do not append a `Co-Authored-By` trailer or any other automated footer — the commit message must contain only the summary itself.
 4. Push the commit to the current branch's remote.
    - If the current branch does not have an upstream remote branch, create one by pushing with upstream tracking.
    - If this repository has no git remotes configured, do not push.

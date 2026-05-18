@@ -1,22 +1,9 @@
 {
     "name": "david-plugge-skills",
     "skills": [
-        "./skills/adr",
-        "./skills/diagnose",
-        "./skills/document-project",
-        "./skills/gitlab-ci-component",
-        "./skills/grill-me",
-        "./skills/grill-with-docs",
-        "./skills/handoff",
-        "./skills/improve-codebase-architecture",
-        "./skills/jira",
-        "./skills/pin-behavior",
-        "./skills/prototype",
-        "./skills/review-with-docs",
-        "./skills/setup-skills",
-        "./skills/tdd",
-        "./skills/write-a-skill",
-        "./skills/write-prd",
+        "./skills/branch-summary",
+        "./skills/git-summary",
+        "./skills/yeet",
         "./skills/zoom-out"
     ]
 }
