@@ -3,6 +3,7 @@
     "skills": [
         "./skills/branch-summary",
         "./skills/git-summary",
+        "./skills/write-a-skill",
         "./skills/yeet",
         "./skills/zoom-out"
     ]
