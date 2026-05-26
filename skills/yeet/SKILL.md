@@ -2,6 +2,7 @@
 name: yeet
 description: Add, commit, and push current repo changes in one shot.
 disable-model-invocation: true
+allowed-tools: Bash(git add:*) Bash(git commit:*) Bash(git push:*) Bash(git status:*) Bash(git diff:*) Bash(git remote:*) Bash(git rev-parse:*) Bash(git symbolic-ref:*) Bash(git branch:*) Bash(git ls-remote:*)
 ---
 
 # yeet
