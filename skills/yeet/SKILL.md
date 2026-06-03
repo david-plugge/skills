@@ -9,6 +9,8 @@ allowed-tools: Bash(git add:*) Bash(git commit:*) Bash(git push:*) Bash(git stat
 
 Commit and push the current repository changes.
 
+Run git commands as plain `git <subcommand>` from the working directory — no `-C` flag and no chaining with `&&` or `;` — so they match the pre-approved permission rules above.
+
 Steps:
 
 1. Add all unstaged changes with `git add -A`.
