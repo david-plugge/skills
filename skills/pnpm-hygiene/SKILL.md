@@ -1,6 +1,6 @@
 ---
 name: pnpm-hygiene
-description: Walk through pnpm dependency maintenance for a v11+ project — dedupe, outdated checks, controlled upgrades, security audits, and override management for transitive CVEs. Use when the user asks to update dependencies, run an audit, deduplicate the lockfile, check for outdated packages, address a CVE, or do periodic dependency maintenance.
+description: Walk through pnpm dependency maintenance for a v11+ project — dedupe, outdated checks, controlled upgrades, transitive refreshes, security audits, and the override lifecycle (adding, documenting, retiring).
 disable-model-invocation: true
 ---
 
@@ -68,7 +68,22 @@ pnpm update --interactive --latest          # allows major bumps
 
 Never run `--latest` without `--interactive` — it will silently break things.
 
-### 4. Verify after updates
+### 4. Refresh transitive dependencies
+
+If earlier steps left uncommitted changes, `git stash` them first — this command rewrites `pnpm-lock.yaml` (and possibly `package.json`), and isolating its diff is what makes it reviewable and independently revertable. Pop the stash after deciding.
+
+```bash
+pnpm update --depth Infinity --lockfile-only
+```
+
+Re-resolves every transitive dependency to the highest version its range allows — the same outcome as resolving from scratch, without deleting the lockfile or copying anything.
+
+- **Fails** (trust downgrade, release age, unresolvable peer) → a latent resolution problem: the lockfile pins a version a fresh resolve can no longer reproduce. Fix it now (override, exclude, or defer deliberately) rather than letting it ambush the next lockfile-less resolve. Frozen installs (`pnpm ci`, `--frozen-lockfile`) structurally cannot catch this — they never re-resolve.
+- **Succeeds** → in-range transitive bugfix/security patches land in the lockfile. Nothing else in this workflow delivers those: `pnpm outdated` and `update --interactive` only see direct deps.
+
+Review the `git diff` of `pnpm-lock.yaml` before keeping it. Caveat: there is no `--no-save`, so it also narrows direct-dep specs in `package.json` when they're looser than the resolved version (e.g. `^24` → `^24.12.4`) — revert that with git if unwanted.
+
+### 5. Verify after updates
 
 ```bash
 pnpm install                                # regenerate lockfile cleanly
@@ -79,7 +94,7 @@ pnpm run test                               # if present
 
 Stop if any step fails. Report and ask before proceeding.
 
-### 5. Override transitive CVEs
+### 6. Override transitive CVEs
 
 For unpatched vulnerabilities deep in the tree, edit `pnpm-workspace.yaml`:
 
@@ -89,9 +104,31 @@ overrides:
     'another-pkg': '^2.0.0' # all versions
 ```
 
-Then `pnpm install` to apply. Verify with `pnpm why vulnerable-pkg` that the resolved version is the patched one. Note the CVE ID in a comment so the override can be removed later when direct deps catch up.
+Then `pnpm install` to apply. Verify with `pnpm why vulnerable-pkg` that the resolved version is the patched one.
 
-### 6. Confirm `allowBuilds` is current
+**Every override must carry its retirement test in a comment** — three parts: *why* it exists (CVE ID, bug, policy block), the *retirement condition* (a checkable upstream fact), and the *verification command*:
+
+```yaml
+overrides:
+    # WHY: 1.7.0 chokes on TS $derived declaration tags.
+    # RETIRE WHEN: eslint-plugin-svelte requires >=1.7.1 — VERIFY: pnpm lint
+    svelte-eslint-parser: ^1.7.1
+```
+
+Undocumented overrides (e.g. inherited from a project scaffold) cost archaeology later: whether they pin a CVE fix, dodge a trust-policy block, or fix a peer-variant bug is indistinguishable from dead weight.
+
+### 7. Retire stale overrides
+
+For each existing override, run this loop:
+
+1. **Check the retirement condition** from the comment — often a single `pnpm view <dependent> dependencies.<pkg>` or a glance at upstream. Not met → keep, move on.
+2. **`pnpm why <pkg>` returns nothing** → the package left the graph entirely; delete the override.
+3. **Delete the override and re-resolve**: `pnpm update --depth Infinity --lockfile-only` (step 4 — a plain `pnpm install` is lockfile-biased and proves nothing), then judge:
+    - resolution error → still needed; restore with `git checkout -- pnpm-workspace.yaml pnpm-lock.yaml` and record the error in the comment
+    - `git diff pnpm-lock.yaml` empty → fresh resolution picks the same version unaided; the override is dead weight, remove it
+    - diff non-empty → resolution changed; run the override's verification command before deciding. **Resolver success ≠ runtime success** — an override that fixes a peer-variant or behavior bug only reveals itself when the consumer actually runs.
+
+### 8. Confirm `allowBuilds` is current
 
 After major upgrades, new packages may want to run install scripts. pnpm v11 blocks them by default. Run:
 
@@ -105,7 +142,7 @@ Add deliberate entries to `allowBuilds:` in `pnpm-workspace.yaml` — never blan
 
 End the session with:
 
-- What changed (deps bumped, overrides added, dedupe run)
+- What changed (deps bumped, transitives refreshed, overrides added or retired, dedupe run)
 - What was deferred (majors not taken, advisories pending patch)
 - Any failing checks that still need attention
 
@@ -117,3 +154,5 @@ Do not commit. Let the user review the diff.
 - `pnpm outdated` exits non-zero when outdated deps exist — that's expected, not an error
 - In monorepos, prefer `pnpm -r update --interactive` over per-package updates
 - `engineStrict` and `preferFrozenLockfile` are pnpm 11 defaults — don't re-add them
+- `pnpm ci`, `pnpm install --force`, `pnpm install --resolution-only`, and `pnpm dedupe --check` are all lockfile-biased — none of them detect latent resolution problems; only step 4 does
+- When removing packages, stale optional-peer variants can linger in the lockfile through `pnpm install` and even `pnpm dedupe`; step 4 (or regenerating the lockfile) prunes them
