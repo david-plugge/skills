@@ -1,6 +1,6 @@
 ---
 name: zoom-out
-description: Tell the agent to zoom out and give broader context or a higher-level perspective.
+description: Ask the agent to zoom out a level and map the relevant modules and callers using the project's domain glossary vocabulary.
 disable-model-invocation: true
 ---
 
