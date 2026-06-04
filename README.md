@@ -25,6 +25,7 @@ Two **foundation skills** define the project's shape and own the shared vocabula
 | [improve-codebase-architecture](skills/improve-codebase-architecture/SKILL.md) | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
 | [mermaid-diagrams](skills/mermaid-diagrams/SKILL.md) | Author and edit Mermaid diagrams in Markdown that render cleanly on GitHub, VS Code, and mermaid.js. Use when creating, editing, or debugging Mermaid diagrams or `mermaid` code blocks, or when a Mermaid "Parse error" / "Lexical error" occurs. |
 | [pnpm-hygiene](skills/pnpm-hygiene/SKILL.md) | Walk through pnpm dependency maintenance for a v11+ project — dedupe, outdated checks, controlled upgrades, security audits, and override management for transitive CVEs. |
+| [setup-skills](skills/setup-skills/SKILL.md) | Wire up a repo to use these skills — add a domain entry point to `CLAUDE.md`/`AGENTS.md` so every session reads the project's glossary and ADRs. Run once per repo. |
 | [tdd](skills/tdd/SKILL.md) | Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time. |
 | [write-a-skill](skills/write-a-skill/SKILL.md) | Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill. |
 | [yeet](skills/yeet/SKILL.md) | Add, commit, and push current repo changes in one shot. |
