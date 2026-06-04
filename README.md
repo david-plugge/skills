@@ -2,8 +2,6 @@
 
 A collection of agent skills for software engineering workflows.
 
-See the [tutorial](TUTORIAL.md) for a walkthrough of how the skills work, how Claude picks them up, and how they chain together on real tasks.
-
 ## Installation
 
 ```sh
