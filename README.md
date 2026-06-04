@@ -21,6 +21,7 @@ Two **foundation skills** define the project's shape and own the shared vocabula
 | [git-summary](skills/git-summary/SKILL.md) | Summarize unstaged git changes with per-file +/- line counts. |
 | [grill-with-docs](skills/grill-with-docs/SKILL.md) | A grilling session that also builds your project's domain model — runs `/grilling` together with `/domain-modeling`. |
 | [grilling](skills/grilling/SKILL.md) | Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved. The reusable loop behind `grill-with-docs`. |
+| [handoff](skills/handoff/SKILL.md) | Compact the current conversation into a handoff document for another agent to pick up. |
 | [improve-codebase-architecture](skills/improve-codebase-architecture/SKILL.md) | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
 | [mermaid-diagrams](skills/mermaid-diagrams/SKILL.md) | Author and edit Mermaid diagrams in Markdown that render cleanly on GitHub, VS Code, and mermaid.js. Use when creating, editing, or debugging Mermaid diagrams or `mermaid` code blocks, or when a Mermaid "Parse error" / "Lexical error" occurs. |
 | [pnpm-hygiene](skills/pnpm-hygiene/SKILL.md) | Walk through pnpm dependency maintenance for a v11+ project — dedupe, outdated checks, controlled upgrades, security audits, and override management for transitive CVEs. |
