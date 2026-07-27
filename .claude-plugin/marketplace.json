@@ -1,0 +1,14 @@
+{
+    "name": "david-plugge-skills",
+    "description": "David Plugge's agent skills for software engineering workflows.",
+    "owner": {
+        "name": "David Plugge"
+    },
+    "plugins": [
+        {
+            "name": "david-plugge-skills",
+            "source": "./",
+            "description": "A collection of agent skills for software engineering workflows."
+        }
+    ]
+}

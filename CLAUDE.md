@@ -1,5 +1,7 @@
 The `skills/` directory is the source of truth. When a skill is added, removed, or renamed, keep `README.md` in sync — the Skills table must have one row per skill (alphabetical), with the name linked to the skills `SKILL.md` file.
 
+This repo is also a Claude Code plugin and its own single-plugin marketplace (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`). Skills are auto-discovered from `skills/`, so neither manifest lists them — never add a `skills` array. After editing a manifest, run `claude plugin validate .`.
+
 ## Commands vs skills
 
 Every `SKILL.md` is one of two kinds. The test for "is it a skill" is: _could the model usefully reach for this autonomously?_

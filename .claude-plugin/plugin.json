@@ -1,0 +1,12 @@
+{
+    "name": "david-plugge-skills",
+    "description": "A collection of agent skills for software engineering workflows.",
+    "version": "0.1.0",
+    "author": {
+        "name": "David Plugge",
+        "email": "git@davidplugge.de"
+    },
+    "homepage": "https://github.com/david-plugge/skills",
+    "repository": "https://github.com/david-plugge/skills",
+    "keywords": ["skills", "tdd", "domain-modeling", "code-review", "git"]
+}

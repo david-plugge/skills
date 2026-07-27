@@ -4,6 +4,15 @@ A collection of agent skills for software engineering workflows.
 
 ## Installation
 
+As a Claude Code plugin:
+
+```
+/plugin marketplace add david-plugge/skills
+/plugin install david-plugge-skills@david-plugge-skills
+```
+
+Or copy the skills into a project:
+
 ```sh
 pnpx skills@latest add david-plugge/skills
 ```
