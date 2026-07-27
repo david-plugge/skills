@@ -2,6 +2,8 @@ The `skills/` directory is the source of truth. When a skill is added, removed, 
 
 This repo is also a Claude Code plugin and its own single-plugin marketplace (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`). Skills are auto-discovered from `skills/`, so neither manifest lists them — never add a `skills` array. After editing a manifest, run `claude plugin validate .`.
 
+MCP servers the plugin ships live in `.claude-plugin/mcp.json`, referenced from `plugin.json`'s `mcpServers` field. Do **not** put them in a root `.mcp.json` — that file is project-scoped config and would also activate the servers while working in this repo.
+
 ## Commands vs skills
 
 Every `SKILL.md` is one of two kinds. The test for "is it a skill" is: _could the model usefully reach for this autonomously?_
