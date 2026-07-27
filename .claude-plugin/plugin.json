@@ -9,5 +9,5 @@
     "homepage": "https://github.com/david-plugge/skills",
     "repository": "https://github.com/david-plugge/skills",
     "license": "MIT",
-    "keywords": ["skills", "tdd", "domain-modeling", "code-review", "git"]
+    "keywords": ["skills", "mermaid", "pnpm", "git"]
 }
